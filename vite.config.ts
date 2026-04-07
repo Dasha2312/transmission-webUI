@@ -11,4 +11,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/transmission': {
+        target: 'http://192.168.0.99:9091',
+        changeOrigin: true,
+      }
+    }
+  }
 })
