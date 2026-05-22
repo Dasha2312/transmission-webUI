@@ -1,29 +1,20 @@
-import { connectToTransmission } from '@/shared/http/HttpRequest/HttpRequest';
+import { connectToTransmission, type RpcResponse } from '@/shared/http/HttpRequest/HttpRequest';
 import { useQuery } from '@tanstack/react-query';
 import type { Torrent } from '../model/type';
+import { TorrentFields } from '@/shared/const/const';
 
-let instance: Awaited<ReturnType<typeof connectToTransmission>> | null = null;
-
-async function getInstance() {
-  if (!instance) {
-    instance = await connectToTransmission();
-  }
-  return instance;
+interface TorrentsResponse {
+  torrents: Torrent[];
 }
 
 export function useTorrents() {
-  const {data, isLoading, isError, error} = useQuery<Torrent[], Error>({
+  const {data, isLoading, isError, error} = useQuery<RpcResponse<TorrentsResponse>, Error>({
     queryKey: ['torrents'],
-    queryFn: async () => {
-      const t = getInstance();
-      const response = (await t).getTorrents();
-
-      return (await response).arguments.torrents
-    },
+    queryFn: () => connectToTransmission('torrent-get', { fields: TorrentFields }),
     refetchInterval: 8000,
     refetchOnWindowFocus: false,
     retry: false,
   })
 
-  return {torrents: data ?? [], isLoading, isError, error}
+  return {torrents: data?.arguments.torrents ?? [], isLoading, isError, error}
 }
