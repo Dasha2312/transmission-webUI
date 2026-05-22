@@ -26,5 +26,5 @@ export type TorrentStatusCode = keyof typeof TORRENT_STATUS;
 export interface TorrentTableProps {
   activeFilter: TorrentFilterInterface;
   setActiveTorrent: React.Dispatch<React.SetStateAction<Torrent | null>>;
-  activeTorrent: Torrent;
+  activeTorrent: Torrent | null;
 }
