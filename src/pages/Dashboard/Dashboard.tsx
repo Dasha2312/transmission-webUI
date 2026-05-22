@@ -6,11 +6,12 @@ import TorrentList from "@/widgets/TorrentTable/TorrentTable";
 interface DashboardProps {
   activeFilter: TorrentFilterInterface;
   setActiveTorrent: React.Dispatch<React.SetStateAction<Torrent | null>>;
+  activeTorrent: Torrent;
 }
 
-function Dashboard({activeFilter, setActiveTorrent}: DashboardProps) {
+function Dashboard({activeFilter, setActiveTorrent, activeTorrent}: DashboardProps) {
   return (
-    <TorrentList activeFilter={activeFilter} setActiveTorrent={setActiveTorrent} />
+    <TorrentList activeFilter={activeFilter} setActiveTorrent={setActiveTorrent} activeTorrent={activeTorrent} />
   );
 }
 

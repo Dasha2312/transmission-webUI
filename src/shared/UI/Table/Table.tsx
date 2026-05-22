@@ -1,3 +1,4 @@
+import React from "react";
 
 function Table({data, renderHeader, renderRow}) {
 
@@ -7,15 +8,14 @@ function Table({data, renderHeader, renderRow}) {
         <tr>{renderHeader()}</tr>
       </thead>
 
-      <tbody className="divide-y divide-gray-100">
+      <tbody className="divide-y divide-gray-100 bg-white">
         {data.length > 0 
         ? (
           data.map(item => (
-            <tr key={item.id} className="cursor-pointer transition-colors ">{renderRow(item)}</tr>
+            <React.Fragment key={item.id}>{renderRow(item)}</React.Fragment>
           ))
         ) : (
-          <tr> <td colSpan={100}>You don't have torrents now</td></tr>
-          
+          <tr><td colSpan={100}>You don't have torrents now</td></tr>
         )}
       </tbody>
     </table>

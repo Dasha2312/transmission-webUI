@@ -34,7 +34,7 @@ function SessionWrapper() {
   if (sessionError) return <p style={{ color: 'red' }}>{sessionErrorObj?.message}</p>;
 
   // console.log('session', session)
-  console.log('activeTorrent', activeTorrent)
+  // console.log('activeTorrent', activeTorrent)
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
@@ -42,14 +42,14 @@ function SessionWrapper() {
         <h1 className="text-white! m-0! text-xl!">qBittorrent</h1>
       </div>
 
-      <Toolbar activeTorrent={activeTorrent} />
+      <Toolbar activeTorrent={activeTorrent} setActiveTorrent={setActiveTorrent} />
 
       <div className="flex flex-1 overflow-hidden">
         <Sidebar activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
 
         <div className="flex-1 flex flex-col overflow-hidden">
           <div className="flex-1 overflow-auto">
-            <Dashboard activeFilter={activeFilter} setActiveTorrent={setActiveTorrent} />
+            <Dashboard activeFilter={activeFilter} setActiveTorrent={setActiveTorrent} activeTorrent={activeTorrent} />
           </div>
         </div>
         

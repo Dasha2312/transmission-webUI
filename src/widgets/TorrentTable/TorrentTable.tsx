@@ -3,7 +3,7 @@ import Table from "@/shared/UI/Table/Table";
 import { TORRENT_STATUS, type TorrentTableProps } from "./types/types";
 import { formatBytes, formatEta, formatSpeed, statusColor } from "./helpers/helpers";
 
-function TorrentTable({activeFilter, setActiveTorrent}: TorrentTableProps) {
+function TorrentTable({activeFilter, setActiveTorrent, activeTorrent}: TorrentTableProps) {
   const { torrents, isLoading } = useTorrents();
 
   // console.log('activeFilter', activeFilter)
@@ -37,19 +37,20 @@ function TorrentTable({activeFilter, setActiveTorrent}: TorrentTableProps) {
         renderRow={(torrentRow: Torrent) => {
           // console.log('torrentRow', torrentRow)
           return (
-            <>
-              <td className="px-4 py-3 max-w-[400px]" onClick={() => setActiveTorrent(torrentRow)}>
-                <div className="text-sm text-gray-900 truncate max-w-md cursor-pointer hover:bg-gray-100 transition-colors">
+            <tr className={`cursor-pointer transition-colors ${activeTorrent?.id === torrentRow.id ? 'bg-blue-50' : 'hover:bg-gray-50'}`} 
+            onClick={() => setActiveTorrent(prev => prev?.id === torrentRow.id ? null : torrentRow)}>
+              <td className="px-4 py-3 max-w-[400px]">
+                <div className="text-sm text-gray-900 truncate max-w-md cursor-pointer transition-colors" title={torrentRow.name}>
                   {torrentRow.name}
                 </div>
               </td>
               <td className="px-4 py-3">
-                <div className="text-sm text-gray-900 truncate max-w-md cursor-pointer hover:bg-gray-100 transition-colors">
+                <div className="text-sm text-gray-900 truncate max-w-md cursor-pointer transition-colors">
                   {formatBytes(torrentRow.sizeWhenDone)}
                 </div>
               </td>
               <td
-                className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer transition-colors"
               >
                 <div className="flex gap-1 flex-col">
                   {torrentRow.percentDone === 1 ? '100%' : `${(torrentRow.percentDone * 100).toFixed(2)}%`}
@@ -62,7 +63,7 @@ function TorrentTable({activeFilter, setActiveTorrent}: TorrentTableProps) {
                 </div>
               </td>
               <td
-                className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
+                className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer transition-colors"
               >
                 <div className={` gap-1 inline-flex px-2 py-1 text-xs rounded-full capitalize ${statusColor(TORRENT_STATUS[torrentRow.status])}`}>
                   {TORRENT_STATUS[torrentRow.status]}
@@ -84,10 +85,10 @@ function TorrentTable({activeFilter, setActiveTorrent}: TorrentTableProps) {
               <td  className="px-4 py-3 text-sm text-gray-900">
                 {torrentRow.peersGettingFromUs}({torrentRow.peersConnected})
               </td>
-              <td  className="px-4 py-3 text-sm text-gray-900">
+              <td  className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                 {torrentRow.uploadRatio.toFixed(2)} / {torrentRow.seedRatioLimit.toFixed(1)}
               </td>
-            </>
+            </tr>
           )
         }}
       />

@@ -1,13 +1,23 @@
 import useSessionStats from "@/entities/session/api/useSessionStats";
-import { Download, Pause, Play, Plus, Search, Settings, Trash2, Upload } from "lucide-react";
+import { Download, Loader2, Pause, Play, Plus, Search, Settings, Trash2, Upload } from "lucide-react";
 import { formatSpeed } from "../TorrentTable/helpers/helpers";
-import type { Torrent } from "@/entities/torrent";
+import useTorrentsStop from "@/entities/torrent/api/useTorrentsStop";
+import useTorrentStart from "@/entities/torrent/api/useTorrentStart";
+import type { ToolbarProps } from "./type/type";
+import { TORRENT_STATUS_CODE } from "../TorrentTable/types/types";
 
-function Toolbar({activeTorrent}: {activeTorrent: Torrent | null}) {
+function Toolbar({activeTorrent, setActiveTorrent}: ToolbarProps) {
   const {data, isLoading} = useSessionStats();
+  const {stopTorrent, isPendingStop} = useTorrentsStop();
+  const {startTorrent, isPendingStart} = useTorrentStart();
 
   const downloadSpeed = data?.arguments.downloadSpeed ?? 0;
   const uploadSpeed = data?.arguments.uploadSpeed ?? 0;
+
+  const canResume = activeTorrent?.status !== TORRENT_STATUS_CODE.STOPPED;
+  const isStopped = activeTorrent?.status === TORRENT_STATUS_CODE.STOPPED;
+  const isSeeding = activeTorrent?.status === TORRENT_STATUS_CODE.SEEDING
+  // const isFinished = activeTorrent?.status === TORRENT_STATUS_CODE.STOPPED || activeTorrent?.status === TORRENT_STATUS_CODE.SEEDING;
 
   console.log('activeTorrent', activeTorrent)
   
@@ -28,20 +38,29 @@ function Toolbar({activeTorrent}: {activeTorrent: Torrent | null}) {
         
         <button
           type="button"
-          className={`p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors ${activeTorrent === null ? 'cursor-default! opacity-30' : ''}`}
+          className={`p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors ${activeTorrent === null || canResume || isSeeding ? 'cursor-default! opacity-30' : ''}`}
           title="resume"
-          disabled={activeTorrent === null}
+          disabled={activeTorrent === null || canResume || isPendingStop || isPendingStart || isSeeding}
+          onClick={() => {
+            startTorrent(activeTorrent!.id);
+            setActiveTorrent(null)
+          }}
         >
-          <Play className="w-5 h-5" />
+          {isPendingStart ? <Loader2 className="w-5 h-5 animate-spin" />  : <Play className="w-5 h-5" />}
         </button>
         
         <button
           type="button"
-          className={`p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors ${activeTorrent === null ? 'cursor-default! opacity-30' : ''}`}
+          className={`p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors ${activeTorrent === null || isStopped || isSeeding ? 'cursor-default! opacity-30' : ''}`}
           title="pause"
-          disabled={activeTorrent === null}
+          disabled={activeTorrent === null || isPendingStop || isPendingStart || isStopped || isSeeding}
+          onClick={() => {
+            stopTorrent(activeTorrent!.id);
+            setActiveTorrent(null)
+          }}
         >
-          <Pause className="w-5 h-5" />
+          {isPendingStop ? <Loader2 className="w-5 h-5 animate-spin" />  : <Pause className="w-5 h-5" />}
+          
         </button>
         
         <button
