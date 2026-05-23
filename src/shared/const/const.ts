@@ -39,7 +39,7 @@ export const TorrentFields = [
   "downloadDir",
   "uploadedEver",
   "uploadRatio",
-  "total_size",
+  "totalSize",
   "percentComplete",
   "webseedsSendingToUs"
 ]

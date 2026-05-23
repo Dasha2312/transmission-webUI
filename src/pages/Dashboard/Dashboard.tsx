@@ -7,11 +7,12 @@ interface DashboardProps {
   activeFilter: TorrentFilterInterface;
   setActiveTorrent: React.Dispatch<React.SetStateAction<Torrent | null>>;
   activeTorrent: Torrent | null;
+  activeLabel: string | null
 }
 
-function Dashboard({activeFilter, setActiveTorrent, activeTorrent}: DashboardProps) {
+function Dashboard({activeFilter, setActiveTorrent, activeTorrent, activeLabel}: DashboardProps) {
   return (
-    <TorrentList activeFilter={activeFilter} setActiveTorrent={setActiveTorrent} activeTorrent={activeTorrent} />
+    <TorrentList activeFilter={activeFilter} setActiveTorrent={setActiveTorrent} activeTorrent={activeTorrent} activeLabel={activeLabel} />
   );
 }
 

@@ -1,5 +1,4 @@
 import type { LucideIcon } from "lucide-react";
-
 export interface TorrentFilterInterface {
   statuses: number[] | null;
   id: string,
@@ -10,5 +9,7 @@ export interface TorrentFilterInterface {
 
 export interface SidebarInterface {
   activeFilter: TorrentFilterInterface;
-  setActiveFilter: (e: TorrentFilterInterface) => void;
+  setActiveFilter: (filter: TorrentFilterInterface) => void;
+  setActiveLabel: (label: string | null) => void;
+  activeLabel: string | null
 }

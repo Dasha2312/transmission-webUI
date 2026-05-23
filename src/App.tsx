@@ -28,6 +28,7 @@ function SessionWrapper() {
   } = useSession();
 
   const [activeFilter, setActiveFilter] = useState(TORRENT_FILTER[0]);
+  const [activeLabel, setActiveLabel] = useState<string | null>(null);
   const [activeTorrent, setActiveTorrent] = useState<Torrent | null>(null);
 
   if (sessionLoading) return <p>Loading session...</p>;
@@ -45,11 +46,11 @@ function SessionWrapper() {
       <Toolbar activeTorrent={activeTorrent} setActiveTorrent={setActiveTorrent} />
 
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+        <Sidebar activeFilter={activeFilter} setActiveFilter={setActiveFilter} setActiveLabel={setActiveLabel} activeLabel={activeLabel} />
 
         <div className="flex-1 flex flex-col overflow-hidden">
           <div className="flex-1 overflow-auto">
-            <Dashboard activeFilter={activeFilter} setActiveTorrent={setActiveTorrent} activeTorrent={activeTorrent} />
+            <Dashboard activeFilter={activeFilter} setActiveTorrent={setActiveTorrent} activeTorrent={activeTorrent} activeLabel={activeLabel} />
           </div>
         </div>
         

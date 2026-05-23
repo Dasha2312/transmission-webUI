@@ -3,12 +3,16 @@ import Table from "@/shared/UI/Table/Table";
 import { TORRENT_STATUS, type TorrentTableProps } from "./types/types";
 import { formatBytes, formatEta, formatSpeed, statusColor } from "./helpers/helpers";
 
-function TorrentTable({activeFilter, setActiveTorrent, activeTorrent}: TorrentTableProps) {
+function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabel}: TorrentTableProps) {
   const { torrents, isLoading } = useTorrents();
 
   // console.log('activeFilter', activeFilter)
 
-  const filteredTorrents = activeFilter.statuses === null ? torrents : torrents.filter(t => activeFilter.statuses?.includes(t.status) )
+  const filteredTorrents = torrents.filter(t => {
+    const statusMatch = activeFilter.statuses === null || activeFilter.statuses.includes(t.status)
+    const labelMatch = activeLabel === null || t.labels.includes(activeLabel)
+    return statusMatch && labelMatch
+  })
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -31,7 +35,7 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent}: TorrentTa
         data={filteredTorrents}
         renderHeader={() => (
           tableHeader.map(({id, label}) => (
-            <th key={id} className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">{label}</th>
+            <th key={id} className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider whitespace-nowrap">{label}</th>
           ))
         )}
         renderRow={(torrentRow: Torrent) => {
@@ -39,7 +43,7 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent}: TorrentTa
           return (
             <tr className={`cursor-pointer transition-colors ${activeTorrent?.id === torrentRow.id ? 'bg-blue-50' : 'hover:bg-gray-50'}`} 
             onClick={() => setActiveTorrent(prev => prev?.id === torrentRow.id ? null : torrentRow)}>
-              <td className="px-4 py-3 max-w-[400px]">
+              <td className="px-4 py-3 max-w-[350px]">
                 <div className="text-sm text-gray-900 truncate max-w-md cursor-pointer transition-colors" title={torrentRow.name}>
                   {torrentRow.name}
                 </div>

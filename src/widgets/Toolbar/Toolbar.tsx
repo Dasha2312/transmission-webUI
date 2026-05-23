@@ -18,7 +18,7 @@ function Toolbar({activeTorrent, setActiveTorrent}: ToolbarProps) {
   const isStopped = activeTorrent?.status === TORRENT_STATUS_CODE.STOPPED;
   const isSeeding = activeTorrent?.status === TORRENT_STATUS_CODE.SEEDING
   
-  console.log('data', data)
+  // console.log('data', data)
   // console.log('activeTorrent', activeTorrent)
   
   return (

@@ -27,4 +27,5 @@ export interface TorrentTableProps {
   activeFilter: TorrentFilterInterface;
   setActiveTorrent: React.Dispatch<React.SetStateAction<Torrent | null>>;
   activeTorrent: Torrent | null;
+  activeLabel: string | null;
 }
