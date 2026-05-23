@@ -17,9 +17,9 @@ function Toolbar({activeTorrent, setActiveTorrent}: ToolbarProps) {
   const canResume = activeTorrent?.status !== TORRENT_STATUS_CODE.STOPPED;
   const isStopped = activeTorrent?.status === TORRENT_STATUS_CODE.STOPPED;
   const isSeeding = activeTorrent?.status === TORRENT_STATUS_CODE.SEEDING
-  // const isFinished = activeTorrent?.status === TORRENT_STATUS_CODE.STOPPED || activeTorrent?.status === TORRENT_STATUS_CODE.SEEDING;
-
-  console.log('activeTorrent', activeTorrent)
+  
+  console.log('data', data)
+  // console.log('activeTorrent', activeTorrent)
   
   return (
     <div className="flex items-center justify-between gap-4 px-6 py-3 bg-white border-b border-gray-200">
