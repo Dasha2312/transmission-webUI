@@ -27,5 +27,6 @@ export function formatEta(eta: number): string {
   if (eta < 0) return '—'
   if (eta < 60) return `${eta}s`
   if (eta < 3600) return `${Math.floor(eta / 60)}m`
-  return `${Math.floor(eta / 3600)}h ${Math.floor((eta % 3600) / 60)}m`
+  if (eta < 86400) return `${Math.floor(eta / 3600)}h ${Math.floor((eta % 3600) / 60)}m`
+  return `${Math.floor(eta / 86400)}d ${Math.floor((eta % 86400) / 3600)}h`
 }

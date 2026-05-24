@@ -23,6 +23,7 @@ export const TorrentFields = [
   "labels",
   "leftUntilDone",
   "metadataPercentComplete",
+  "peers",
   "peersConnected",
   "peersGettingFromUs",
   "peersSendingToUs",
@@ -40,6 +41,7 @@ export const TorrentFields = [
   "uploadedEver",
   "uploadRatio",
   "totalSize",
+  "trackerStats",
   "percentComplete",
   "webseedsSendingToUs"
 ]

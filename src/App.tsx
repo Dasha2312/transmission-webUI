@@ -6,6 +6,7 @@ import { useSession } from "./entities/session/api/useSession";
 import { useState } from "react";
 import { TORRENT_FILTER } from "./widgets/Sidebar/data/data";
 import type { Torrent } from "./entities/torrent";
+import StatusBar from "./widgets/StatusBar/StatusBar";
 
 const queryClient = new QueryClient()
 
@@ -55,6 +56,8 @@ function SessionWrapper() {
         </div>
         
       </div>
+
+      <StatusBar />
     </div>
   );
 }

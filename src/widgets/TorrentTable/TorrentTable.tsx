@@ -40,6 +40,8 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabe
         )}
         renderRow={(torrentRow: Torrent) => {
           // console.log('torrentRow', torrentRow)
+          const maxSeeders = Math.max(0, ...torrentRow.trackerStats.map(t => t.seederCount ?? 0));
+          const maxPeers = Math.max(0, ...torrentRow.trackerStats.map(t => t.leecherCount ?? 0))
           return (
             <tr className={`cursor-pointer transition-colors ${activeTorrent?.id === torrentRow.id ? 'bg-blue-50' : 'hover:bg-gray-50'}`} 
             onClick={() => setActiveTorrent(prev => prev?.id === torrentRow.id ? null : torrentRow)}>
@@ -83,11 +85,11 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabe
                 {formatEta(torrentRow.eta)}
               </td>
               <td  className="px-4 py-3 text-sm text-gray-900">
-                {torrentRow.peersSendingToUs}({torrentRow.peersConnected})
+                {torrentRow.peersSendingToUs}({maxSeeders})
                 {/* {torrentRow.seedRatioLimit.toFixed(1)} */}
               </td>
               <td  className="px-4 py-3 text-sm text-gray-900">
-                {torrentRow.peersGettingFromUs}({torrentRow.peersConnected})
+                {torrentRow.peersGettingFromUs}({maxPeers})
               </td>
               <td  className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                 {torrentRow.uploadRatio.toFixed(2)} / {torrentRow.seedRatioLimit.toFixed(1)}

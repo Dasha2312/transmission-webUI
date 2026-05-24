@@ -11,15 +11,15 @@ function Toolbar({activeTorrent, setActiveTorrent}: ToolbarProps) {
   const {stopTorrent, isPendingStop} = useTorrentsStop();
   const {startTorrent, isPendingStart} = useTorrentStart();
 
-  const downloadSpeed = data?.arguments.downloadSpeed ?? 0;
-  const uploadSpeed = data?.arguments.uploadSpeed ?? 0;
+  const downloadSpeed = data?.arguments.downloadSpeed; // not work
+  const uploadSpeed = data?.arguments.uploadSpeed; // not work
 
   const canResume = activeTorrent?.status !== TORRENT_STATUS_CODE.STOPPED;
   const isStopped = activeTorrent?.status === TORRENT_STATUS_CODE.STOPPED;
   const isSeeding = activeTorrent?.status === TORRENT_STATUS_CODE.SEEDING
   
-  // console.log('data', data)
-  // console.log('activeTorrent', activeTorrent)
+  console.log('data?.arguments', data?.arguments)
+  console.log('data?.arguments.uploadSpeed', data?.arguments.uploadSpeed)
   
   return (
     <div className="flex items-center justify-between gap-4 px-6 py-3 bg-white border-b border-gray-200">
