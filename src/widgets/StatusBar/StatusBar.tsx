@@ -1,7 +1,7 @@
 import { useSession } from "@/entities/session/api/useSession";
 import { useTorrents } from "@/entities/torrent";
 import { Globe, HardDrive, Users, Wifi } from "lucide-react";
-import { TORRENT_STATUS, TORRENT_STATUS_CODE } from "../TorrentTable/types/types";
+import { TORRENT_STATUS_CODE } from "../TorrentTable/types/types";
 
 function StatusBar() {
   const { data, isError } = useSession();

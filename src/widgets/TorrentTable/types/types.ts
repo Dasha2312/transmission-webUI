@@ -8,7 +8,8 @@ export const TORRENT_STATUS = {
   3:	'Queued to download',
   4:	'Downloading',
   5:	'Queued to seed',
-  6:	'Seeding'
+  6:	'Seeding',
+  7: 'Completed'
 } as const;
 
 export const TORRENT_STATUS_CODE = {
@@ -19,6 +20,7 @@ export const TORRENT_STATUS_CODE = {
   DOWNLOADING: 4,
   QUEUED_TO_SEED: 5,
   SEEDING: 6,
+  COMPLETED: 7,
 } as const
 
 export type TorrentStatusCode = keyof typeof TORRENT_STATUS;

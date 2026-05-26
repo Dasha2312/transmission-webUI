@@ -12,6 +12,8 @@ export function statusColor(status: string) {
       return 'text-green-500 bg-green-500/10'
     case(TORRENT_STATUS[0]):
       return 'text-gray-500 bg-gray-500/10'
+    case(TORRENT_STATUS[7]):
+      return 'text-mist-500 bg-mist-500/40'
     default: 
       return 'text-gray-500 bg-gray-500/10'
   }

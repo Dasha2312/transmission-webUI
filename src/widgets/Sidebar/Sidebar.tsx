@@ -35,7 +35,7 @@ function Sidebar({activeFilter, setActiveFilter, setActiveLabel, activeLabel}: S
         <div className="p-2">
           {TORRENT_FILTER.map((category) => {
             const Icon = category.icon;
-            const count = getTorrentCount(category.statuses, torrents);
+            const count = getTorrentCount(category, torrents);
 
             return (
               <button

@@ -1,17 +1,19 @@
 import { useTorrents, type Torrent } from "@/entities/torrent";
 import Table from "@/shared/UI/Table/Table";
-import { TORRENT_STATUS, type TorrentTableProps } from "./types/types";
+import { TORRENT_STATUS, TORRENT_STATUS_CODE, type TorrentTableProps } from "./types/types";
 import { formatBytes, formatEta, formatSpeed, statusColor } from "./helpers/helpers";
+import { AlertCircle } from "lucide-react";
 
 function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabel}: TorrentTableProps) {
   const { torrents, isLoading } = useTorrents();
 
-  // console.log('activeFilter', activeFilter)
-
   const filteredTorrents = torrents.filter(t => {
-    const statusMatch = activeFilter.statuses === null || activeFilter.statuses.includes(t.status)
+    const filterMatch = activeFilter.isFinished !== null
+      ? t.isFinished === activeFilter.isFinished && (activeFilter.statuses === null || activeFilter.statuses.includes(t.status))
+      : activeFilter.statuses === null || activeFilter.statuses.includes(t.status)
+
     const labelMatch = activeLabel === null || t.labels.includes(activeLabel)
-    return statusMatch && labelMatch
+    return filterMatch && labelMatch
   })
 
   if (isLoading) return <div>Loading...</div>;
@@ -29,6 +31,8 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabe
     {id: 10, label: 'Ratio'},
   ]
 
+  console.log('filteredTorrents', filteredTorrents)
+
   return (
     <div>
       <Table
@@ -41,7 +45,9 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabe
         renderRow={(torrentRow: Torrent) => {
           // console.log('torrentRow', torrentRow)
           const maxSeeders = Math.max(0, ...torrentRow.trackerStats.map(t => t.seederCount ?? 0));
-          const maxPeers = Math.max(0, ...torrentRow.trackerStats.map(t => t.leecherCount ?? 0))
+          const maxPeers = Math.max(0, ...torrentRow.trackerStats.map(t => t.leecherCount ?? 0));
+          const torrentStatus = torrentRow.isFinished ? TORRENT_STATUS_CODE.COMPLETED : torrentRow.status;
+
           return (
             <tr className={`cursor-pointer transition-colors ${activeTorrent?.id === torrentRow.id ? 'bg-blue-50' : 'hover:bg-gray-50'}`} 
             onClick={() => setActiveTorrent(prev => prev?.id === torrentRow.id ? null : torrentRow)}>
@@ -71,8 +77,13 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabe
               <td
                 className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider cursor-pointer transition-colors"
               >
-                <div className={` gap-1 inline-flex px-2 py-1 text-xs rounded-full capitalize ${statusColor(TORRENT_STATUS[torrentRow.status])}`}>
-                  {TORRENT_STATUS[torrentRow.status]}
+                <div className={` gap-1 inline-flex px-2 py-1 text-xs rounded-full capitalize ${statusColor(TORRENT_STATUS[torrentStatus])}`}>
+                  {torrentRow.isStalled && (<span title="No activity - torrent is stalled">
+                      <AlertCircle className="w-4 h-4 text-yellow-500" />
+                      </span>
+                    )
+                  }
+                  {TORRENT_STATUS[torrentStatus]}
                 </div>
               </td>
               <td  className="px-4 py-3 text-sm text-gray-900">
@@ -82,11 +93,10 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabe
                 {formatSpeed(torrentRow.rateUpload)}
               </td>
               <td  className="px-4 py-3 text-sm text-gray-900 min-w-32 whitespace-nowrap">
-                {formatEta(torrentRow.eta)}
+                {torrentRow.rateDownload > 0 ? formatEta(torrentRow.eta) : '-'}
               </td>
               <td  className="px-4 py-3 text-sm text-gray-900">
                 {torrentRow.peersSendingToUs}({maxSeeders})
-                {/* {torrentRow.seedRatioLimit.toFixed(1)} */}
               </td>
               <td  className="px-4 py-3 text-sm text-gray-900">
                 {torrentRow.peersGettingFromUs}({maxPeers})

@@ -11,16 +11,13 @@ function Toolbar({activeTorrent, setActiveTorrent}: ToolbarProps) {
   const {stopTorrent, isPendingStop} = useTorrentsStop();
   const {startTorrent, isPendingStart} = useTorrentStart();
 
-  const downloadSpeed = data?.arguments.downloadSpeed; // not work
-  const uploadSpeed = data?.arguments.uploadSpeed; // not work
+  const downloadSpeed = data?.arguments.downloadSpeed;
+  const uploadSpeed = data?.arguments.uploadSpeed;
 
   const canResume = activeTorrent?.status !== TORRENT_STATUS_CODE.STOPPED;
   const isStopped = activeTorrent?.status === TORRENT_STATUS_CODE.STOPPED;
   const isSeeding = activeTorrent?.status === TORRENT_STATUS_CODE.SEEDING
-  
-  console.log('data?.arguments', data?.arguments)
-  console.log('data?.arguments.uploadSpeed', data?.arguments.uploadSpeed)
-  
+
   return (
     <div className="flex items-center justify-between gap-4 px-6 py-3 bg-white border-b border-gray-200">
       <div className="flex items-center gap-2">
@@ -87,11 +84,11 @@ function Toolbar({activeTorrent, setActiveTorrent}: ToolbarProps) {
         <div className="flex items-center gap-2 text-sm">
           <div className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg">
             <Download className="w-4 h-4" />
-            <span>{isLoading ? 'Loading...' : downloadSpeed === 0 ? '0 MB/s' : formatSpeed(downloadSpeed)}</span>
+            <span>{isLoading ? 'Loading...' : downloadSpeed === 0 ? '0 MB/s' : formatSpeed(downloadSpeed!)}</span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 rounded-lg">
             <Upload className="w-4 h-4" />
-            <span><span>{isLoading ? 'Loading...' : uploadSpeed === 0 ? '0 KB/s' : formatSpeed(uploadSpeed)}</span></span>
+            <span><span>{isLoading ? 'Loading...' : uploadSpeed === 0 ? '0 KB/s' : formatSpeed(uploadSpeed!)}</span></span>
           </div>
         </div>
         
