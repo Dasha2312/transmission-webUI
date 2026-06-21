@@ -3,9 +3,11 @@ import Table from "@/shared/UI/Table/Table";
 import { TORRENT_STATUS, TORRENT_STATUS_CODE, type TorrentTableProps } from "./types/types";
 import { formatBytes, formatEta, formatSpeed, statusColor } from "./helpers/helpers";
 import { AlertCircle } from "lucide-react";
+import { useActiveTorrent } from "@/shared/store/activeTorrent";
 
-function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabel}: TorrentTableProps) {
+function TorrentTable({activeFilter, activeLabel}: TorrentTableProps) {
   const { torrents, isLoading } = useTorrents();
+  const { activeTorrentItem, setActiveTorrentItem } = useActiveTorrent();
 
   const filteredTorrents = torrents.filter(t => {
     const filterMatch = activeFilter.isFinished !== null
@@ -31,7 +33,7 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabe
     {id: 10, label: 'Ratio'},
   ]
 
-  console.log('filteredTorrents', filteredTorrents)
+  // console.log('filteredTorrents', filteredTorrents)
 
   return (
     <div>
@@ -49,8 +51,8 @@ function TorrentTable({activeFilter, setActiveTorrent, activeTorrent, activeLabe
           const torrentStatus = torrentRow.isFinished ? TORRENT_STATUS_CODE.COMPLETED : torrentRow.status;
 
           return (
-            <tr className={`cursor-pointer transition-colors ${activeTorrent?.id === torrentRow.id ? 'bg-blue-50' : 'hover:bg-gray-50'}`} 
-            onClick={() => setActiveTorrent(prev => prev?.id === torrentRow.id ? null : torrentRow)}>
+            <tr className={`cursor-pointer transition-colors ${activeTorrentItem?.id === torrentRow.id ? 'bg-blue-50' : 'hover:bg-gray-50'}`} 
+            onClick={() => setActiveTorrentItem(prev => prev?.id === torrentRow.id ? null : torrentRow)}>
               <td className="px-4 py-3 max-w-[350px]">
                 <div className="text-sm text-gray-900 truncate max-w-md cursor-pointer transition-colors" title={torrentRow.name}>
                   {torrentRow.name}
