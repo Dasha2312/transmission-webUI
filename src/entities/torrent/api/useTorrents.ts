@@ -13,7 +13,7 @@ export function useTorrents() {
 
   const {data, isLoading, isError, error} = useQuery<RpcResponse<TorrentsResponse>>({
     queryKey: ['torrents'],
-    queryFn: () => connectToTransmission('torrent-get', { fields: TorrentFields }),
+    queryFn: () => connectToTransmission('torrent_get', { fields: TorrentFields }),
     refetchInterval: 8000,
     refetchOnWindowFocus: false,
     retry: false,
@@ -22,7 +22,7 @@ export function useTorrents() {
   useQuery({
     queryKey: ['torrents-active'],
     queryFn: async() => {
-      const result = await connectToTransmission<TorrentsResponse>('torrent-get', {
+      const result = await connectToTransmission<TorrentsResponse>('torrent_get', {
         ids: 'recently-active',
         fields: TorrentFields
       })

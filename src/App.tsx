@@ -35,7 +35,7 @@ function SessionWrapper() {
   if (sessionLoading) return <p>Loading session...</p>;
   if (sessionError) return <p style={{ color: 'red' }}>{sessionErrorObj?.message}</p>;
 
-  // console.log('session', session)
+  console.log('session', session)
   // console.log('activeTorrent', activeTorrent)
 
   return (

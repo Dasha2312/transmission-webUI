@@ -28,7 +28,12 @@ export async function connectToTransmission<T>(
       'Content-Type': 'application/json',
       ...(sessionId && { 'X-Transmission-Session-Id': sessionId }),
     },
-    body: JSON.stringify({ method, arguments: args }),
+    body: JSON.stringify({ 
+      id: "webui",
+      jsonrpc : "2.0",
+      method, 
+      arguments: args 
+    }),
   });
 
   if (res.status === 409) {
@@ -43,5 +48,6 @@ export async function connectToTransmission<T>(
 
   if (data.result !== 'success') throw new Error(data.result);
 
+  console.log('data', data)
   return data;
 }

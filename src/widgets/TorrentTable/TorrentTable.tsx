@@ -1,9 +1,15 @@
 import { useTorrents, type Torrent } from "@/entities/torrent";
 import Table from "@/shared/UI/Table/Table";
-import { TORRENT_STATUS, TORRENT_STATUS_CODE, type TorrentTableProps } from "./types/types";
+import { TORRENT_STATUS, TORRENT_STATUS_CODE } from "./types/types";
 import { formatBytes, formatEta, formatSpeed, statusColor } from "./helpers/helpers";
 import { AlertCircle } from "lucide-react";
 import { useActiveTorrent } from "@/shared/store/activeTorrent";
+import type { TorrentFilterInterface } from "../Sidebar/types/types";
+
+interface TorrentTableProps {
+  activeFilter: TorrentFilterInterface;
+  activeLabel: string | null
+}
 
 function TorrentTable({activeFilter, activeLabel}: TorrentTableProps) {
   const { torrents, isLoading } = useTorrents();
@@ -33,7 +39,7 @@ function TorrentTable({activeFilter, activeLabel}: TorrentTableProps) {
     {id: 10, label: 'Ratio'},
   ]
 
-  // console.log('filteredTorrents', filteredTorrents)
+  console.log('torrents', torrents)
 
   return (
     <div>

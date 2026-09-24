@@ -1,5 +1,5 @@
 import type { TorrentFilterInterface } from "@/widgets/Sidebar/types/types";
-import TorrentList from "@/widgets/TorrentTable/TorrentTable";
+import TorrentTable from "@/widgets/TorrentTable/TorrentTable";
 
 interface DashboardProps {
   activeFilter: TorrentFilterInterface;
@@ -8,7 +8,7 @@ interface DashboardProps {
 
 function Dashboard({activeFilter, activeLabel}: DashboardProps) {
   return (
-    <TorrentList activeFilter={activeFilter} activeLabel={activeLabel} />
+    <TorrentTable activeFilter={activeFilter} activeLabel={activeLabel} />
   );
 }
 

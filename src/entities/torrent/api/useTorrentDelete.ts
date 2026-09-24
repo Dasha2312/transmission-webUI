@@ -10,7 +10,7 @@ export function useTorrentDelete() {
   const queryClient = useQueryClient();
 
   const {mutate: torrentDelete, isPending, isError, error} = useMutation<RpcResponse<TorrentDeleteResponse>, Error, { id: number; deleteFiles: boolean }>({
-    mutationFn: ({ id, deleteFiles }: { id: number; deleteFiles: boolean }) => connectToTransmission('torrent-remove', { ids: [id], 'delete-local-data': deleteFiles }),
+    mutationFn: ({ id, deleteFiles }: { id: number; deleteFiles: boolean }) => connectToTransmission('torrent_remove', { ids: [id], 'delete-local-data': deleteFiles }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['torrents'] })
   })
 

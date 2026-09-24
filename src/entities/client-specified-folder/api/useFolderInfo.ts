@@ -5,7 +5,7 @@ import type { FolderInfoDTO } from "../type/type";
 function useFolderInfo({dirPath}) {
   const { data: folderInfo, isLoading: folderInfoIsLoading, isError, error} = useQuery<FolderInfoDTO>({
     queryKey: ['freeSpace'],
-    queryFn: () => connectToTransmission('free-space', { path: dirPath}),
+    queryFn: () => connectToTransmission('free_space', { path: dirPath}),
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   })
