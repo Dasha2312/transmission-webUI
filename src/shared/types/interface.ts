@@ -70,5 +70,7 @@ export interface TrackerStat {
 
 export const ModalType = {
   ADD_TORRENT: "add-torrent",
-  DELETE_TORRENT: "delete-torrent"
+  DELETE_TORRENT: "delete-torrent",
+  DETAILS_TORRENT: 'details-torrent',
+  SETTING: 'setting'
 } as const

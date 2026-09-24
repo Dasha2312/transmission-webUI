@@ -27,11 +27,6 @@ function AddTorrentModal({onClose}: {onClose: () => void}) {
       filename = link
     }
 
-    console.log('metainfo', metainfo)
-    console.log('filename', filename)
-    console.log('dirPath', dirPath)
-    console.log('paused', paused)
-
     addTorrent({
       downloadDir: dirPath,
       paused: paused,

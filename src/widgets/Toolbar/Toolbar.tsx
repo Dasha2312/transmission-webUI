@@ -81,6 +81,7 @@ function Toolbar() {
           type="button"
           className="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           title="Settings"
+          onClick={() => setType(ModalType.SETTING)}
         >
           <Settings className="w-5 h-5" />
         </button>
