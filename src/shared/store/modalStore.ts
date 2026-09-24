@@ -1,7 +1,8 @@
 import { create } from "zustand"
+import type { ModalType } from "../types/interface";
 
 type ModalStore = {
-  type: 'add-torrent' | 'delete-torrent' | 'torrent-details' | null;
+  type: (typeof ModalType)[keyof typeof ModalType] | null;
   setType: (type: ModalStore['type']) => void;
 }
 
