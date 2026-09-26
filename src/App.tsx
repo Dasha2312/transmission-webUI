@@ -32,14 +32,10 @@ function SessionWrapper() {
   const [activeFilter, setActiveFilter] = useState(TORRENT_FILTER[0]);
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
 
-  if (sessionLoading) return <p>Loading session...</p>;
-  if (sessionError) return <p style={{ color: 'red' }}>{sessionErrorObj?.message}</p>;
-
-  console.log('session', session)
-  // console.log('activeTorrent', activeTorrent)
-
   return (
     <>
+      {sessionError && <p style={{ color: 'red' }}>{sessionErrorObj?.message}</p>}
+
       <div className="h-screen flex flex-col bg-gray-100">
         <div className="bg-linear-to-r from-blue-600 to-blue-700 px-6 py-4 shadow-lg">
           <h1 className="text-white! m-0! text-xl!">qBittorrent</h1>

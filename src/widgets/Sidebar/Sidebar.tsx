@@ -8,14 +8,14 @@ import { formatBytes } from "../TorrentTable/helpers/helpers";
 
 
 function Sidebar({activeFilter, setActiveFilter, setActiveLabel, activeLabel}: SidebarInterface) {
-  const { data } = useSession();
+  const { data: session } = useSession();
   const { torrents, isLoading } = useTorrents();
-  const { folderInfo, folderInfoIsLoading } = useFolderInfo({dirPath: data?.arguments['download-dir']});
+  const { folderInfo, folderInfoIsLoading } = useFolderInfo({dirPath: session?.download_dir});
 
   const selectedCategory = activeFilter.id;
 
   const usedPercent = folderInfo
-  ? ((folderInfo.arguments['total_size'] - folderInfo.arguments['size-bytes']) / folderInfo.arguments['total_size'] * 100).toFixed(1)
+  ? ((folderInfo.total_size - folderInfo.size_bytes) / folderInfo.total_size * 100).toFixed(1)
   : 0
 
   const torrentsLabels = [...new Set(torrents.flatMap(t => t.labels))].map(label => ({
@@ -96,14 +96,14 @@ function Sidebar({activeFilter, setActiveFilter, setActiveLabel, activeLabel}: S
             <span>Free Space:</span>
             {folderInfoIsLoading 
               ? "Loading..."
-              : <span className="font-medium text-gray-900">{formatBytes(folderInfo?.arguments['size-bytes'] ?? 0)}</span>
+              : <span className="font-medium text-gray-900">{formatBytes(folderInfo?.size_bytes ?? 0)}</span>
             }
           </div>
           <div className="flex justify-between text-gray-600">
             <span>Total Size:</span>
             {folderInfoIsLoading
               ? 'Loading...'
-              : <span className="font-medium text-gray-900">{formatBytes(folderInfo?.arguments['total_size'] ?? 0)}</span>
+              : <span className="font-medium text-gray-900">{formatBytes(folderInfo?.total_size ?? 0)}</span>
             }
           </div>
           <div className="mt-2 pt-2 border-t border-gray-200">

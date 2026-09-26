@@ -9,7 +9,7 @@ function StatusBar() {
 
   const totalSeeds = torrents?.map(torrentRow => Math.max(0, ...torrentRow.trackerStats.map(t => t?.seederCount))).reduce((acc, val) => (acc+ val), 0);
   const totalPeers = torrents?.map(torrentRow => Math.max(0, ...torrentRow.trackerStats.map(t => t.leecherCount ?? 0))).reduce((acc, val) => (acc + val), 0);
-  const dhtStatus = data?.arguments['dht-enabled'];
+  const dhtStatus = data?.dht_enabled;
 
   const totalTorrents = torrents.length;
   const activeTorrents = torrents.filter(el => el.status === TORRENT_STATUS_CODE.SEEDING).length

@@ -15,8 +15,10 @@ function Toolbar() {
   const {setType} = useModalState();
   const {activeTorrentItem, setActiveTorrentItem} = useActiveTorrent();
 
-  const downloadSpeed = data?.arguments.downloadSpeed;
-  const uploadSpeed = data?.arguments.uploadSpeed;
+  console.log('data', data)
+
+  const downloadSpeed = data?.download_speed;
+  const uploadSpeed = data?.upload_speed;
 
   const canResume = activeTorrentItem?.status !== TORRENT_STATUS_CODE.STOPPED;
   const isStopped = activeTorrentItem?.status === TORRENT_STATUS_CODE.STOPPED;

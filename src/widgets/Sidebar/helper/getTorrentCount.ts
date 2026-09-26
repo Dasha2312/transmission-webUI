@@ -3,11 +3,11 @@ import type { TorrentFilterInterface } from "../types/types";
 
 
 export function getTorrentCount(filter: TorrentFilterInterface, torrents: Torrent[]) {
-  if (filter.statuses === null && filter.isFinished === null) return torrents.length
+  if (filter.statuses === null && filter.is_finished === null) return torrents.length
 
   return torrents.filter(t => {
-    if (filter.isFinished !== null) {
-      return t.isFinished === filter.isFinished && (filter.statuses === null || filter.statuses.includes(t.status))
+    if (filter.is_finished !== null) {
+      return t.is_finished === filter.is_finished && (filter.statuses === null || filter.statuses.includes(t.status))
     }
     return filter.statuses!.includes(t.status)
   }).length

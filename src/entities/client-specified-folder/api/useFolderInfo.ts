@@ -10,6 +10,8 @@ function useFolderInfo({dirPath}) {
     staleTime: Infinity,
   })
 
+  console.log('folderInfo', folderInfo)
+
   return { folderInfo, folderInfoIsLoading, isError,error }
 }
 

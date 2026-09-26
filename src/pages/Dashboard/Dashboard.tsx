@@ -7,6 +7,7 @@ interface DashboardProps {
 }
 
 function Dashboard({activeFilter, activeLabel}: DashboardProps) {
+
   return (
     <TorrentTable activeFilter={activeFilter} activeLabel={activeLabel} />
   );
