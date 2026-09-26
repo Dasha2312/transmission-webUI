@@ -5,7 +5,7 @@ import type { SessionStatsDTO } from "./type/type";
 export function useSession() {
   const {data, isLoading, isError, error} = useQuery<SessionStatsDTO>({
     queryKey: ['session'],
-    queryFn: () => connectToTransmission('session-get'),
+    queryFn: () => connectToTransmission('session_get'),
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   })

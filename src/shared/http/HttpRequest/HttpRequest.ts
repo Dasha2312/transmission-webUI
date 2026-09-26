@@ -5,14 +5,11 @@ export interface TransmissionConfig {
   password?: string;
 }
 
-export type RpcRequest = {
-  method: string;
-  arguments?: Record<string, any>;
-};
-
 export type RpcResponse<T> = {
-  result: string;
-  arguments: T;
+  result: T;
+  jsonrpc: string;
+  id: string;
+  error?: { code: number; message: string };
 };
 
 let sessionId: string | null = null;
@@ -20,7 +17,7 @@ let sessionId: string | null = null;
 export async function connectToTransmission<T>(
   method: string,
   args?: Record<string, any>
-): Promise<RpcResponse<T>> {
+): Promise<T> {
   const res = await fetch(enumConst.BASE_URL, {
     method: 'POST',
     credentials: 'include',
@@ -28,20 +25,27 @@ export async function connectToTransmission<T>(
       'Content-Type': 'application/json',
       ...(sessionId && { 'X-Transmission-Session-Id': sessionId }),
     },
-    body: JSON.stringify({ method, arguments: args }),
+    body: JSON.stringify({ 
+      id: "webui",
+      jsonrpc : "2.0",
+      method, 
+      params: args 
+    }),
   });
 
   if (res.status === 409) {
     const newSessionId = res.headers.get('X-Transmission-Session-Id');
     if (!newSessionId) throw new Error('No session id');
     sessionId = newSessionId;
+
     return connectToTransmission<T>(method, args);
   }
 
   if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+
   const data: RpcResponse<T> = await res.json();
 
-  if (data.result !== 'success') throw new Error(data.result);
+  if (data.error) throw new Error(data.error.message);
 
-  return data;
+  return data.result;
 }

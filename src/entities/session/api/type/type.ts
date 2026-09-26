@@ -1,22 +1,19 @@
 export interface SessionStatsDTO {
-  arguments: SessionStatsArguments,
-  result: string;
-}
-
-export interface SessionStatsArguments {
-  activeTorrentCount: number;
-  'cumulative-stats': SessionStatsInfo;
-  'current-stats': SessionStatsInfo,
-  downloadSpeed: number;
-  pausedTorrentCount: number;
-  torrentCount: number;
-  uploadSpeed: number;
+  active_torrent_count: number,
+  cumulative_stats: SessionStatsInfo,
+  current_stats: SessionStatsInfo,
+  download_speed: number,
+  paused_torrent_count: number,
+  torrent_count: number,
+  upload_speed: number,
+  download_dir: string;
+  dht_enabled: string;
 }
 
 export interface SessionStatsInfo {
-  downloadedBytes: number;
-  filesAdded: number;
-  secondsActive: number;
-  sessionCount: number;
-  uploadedBytes: number;
+  downloaded_bytes: number,
+  files_added: number,
+  seconds_active: number,
+  session_count: number,
+  uploaded_bytes: number
 }

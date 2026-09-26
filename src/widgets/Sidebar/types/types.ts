@@ -4,7 +4,7 @@ export interface TorrentFilterInterface {
   id: string,
   labelKey: string;
   icon: LucideIcon;
-  isFinished?: boolean | null;
+  is_finished?: boolean | null;
 }
 
 export interface SidebarInterface {

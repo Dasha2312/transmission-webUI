@@ -5,7 +5,7 @@ function useTorrentStart() {
   const queryClient = useQueryClient();
 
   const {mutate: startTorrent, isPending: isPendingStart} = useMutation({
-    mutationFn: (id: number) => connectToTransmission('torrent-start', { ids: [id] }),
+    mutationFn: (id: number) => connectToTransmission('torrent_start', { ids: [id] }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['torrents'] })
   })
 

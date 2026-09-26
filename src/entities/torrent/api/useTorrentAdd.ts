@@ -10,7 +10,7 @@ function useTorrentAdd() {
   const queryClient = useQueryClient();
 
   const {mutate: addTorrent, isPending, isError, error} = useMutation<RpcResponse<TorrentAddResponse>, Error, { downloadDir: string; paused: boolean; metainfo: string | null; filename: string | null }>({
-    mutationFn: ({downloadDir, paused, metainfo, filename}) => connectToTransmission('torrent-add', { 'download-dir': downloadDir, paused: paused, filename, metainfo }),
+    mutationFn: ({downloadDir, paused, metainfo, filename}) => connectToTransmission('torrent_add', { 'download-dir': downloadDir, paused: paused, filename, metainfo }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['torrents'] })
   })
 

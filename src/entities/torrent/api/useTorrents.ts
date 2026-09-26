@@ -1,7 +1,8 @@
-import { connectToTransmission, type RpcResponse } from '@/shared/http/HttpRequest/HttpRequest';
+import { connectToTransmission } from '@/shared/http/HttpRequest/HttpRequest';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Torrent } from '../model/type';
 import { TorrentFields } from '@/shared/const/const';
+import { useSession } from '@/entities/session/api/useSession';
 
 interface TorrentsResponse {
   torrents: Torrent[];
@@ -10,10 +11,14 @@ interface TorrentsResponse {
 
 export function useTorrents() {
   const queryClient = useQueryClient();
+  const { data: session } = useSession();
 
-  const {data, isLoading, isError, error} = useQuery<RpcResponse<TorrentsResponse>>({
+  console.log('session', session)
+
+  const {data, isLoading, isError, error} = useQuery<TorrentsResponse>({
     queryKey: ['torrents'],
-    queryFn: () => connectToTransmission('torrent-get', { fields: TorrentFields }),
+    queryFn: () => connectToTransmission('torrent_get', { fields: TorrentFields }),
+    enabled: !!session,
     refetchInterval: 8000,
     refetchOnWindowFocus: false,
     retry: false,
@@ -22,22 +27,22 @@ export function useTorrents() {
   useQuery({
     queryKey: ['torrents-active'],
     queryFn: async() => {
-      const result = await connectToTransmission<TorrentsResponse>('torrent-get', {
-        ids: 'recently-active',
-        fields: TorrentFields
+      const result = await connectToTransmission<TorrentsResponse>('torrent_get', {
+        ids: 'recently_active',
+        fields: TorrentFields,
       })
 
-      const updated = result?.arguments.torrents;
-      const removed = result?.arguments.removed ?? [];
+      const updated = result?.torrents;
+      const removed = result?.removed ?? [];
 
-      queryClient.setQueryData<RpcResponse<TorrentsResponse>>(['torrents'], (prev) => {
+      queryClient.setQueryData<TorrentsResponse>(['torrents'], (prev) => {
         if(!prev) return prev;
 
         return {
           ...prev,
           arguments: {
-            ...prev.arguments,
-            torrents: prev.arguments.torrents.filter(t => !removed.includes(t.id)).map(t => updated.find(u => u.id === t.id) ?? t)
+            ...prev,
+            torrents: prev.torrents.filter(t => !removed.includes(t.id)).map(t => updated.find(u => u.id === t.id) ?? t)
           }
         }
       })   
@@ -50,5 +55,6 @@ export function useTorrents() {
     retry: false,
   })
 
-  return {torrents: data?.arguments.torrents ?? [], isLoading, isError, error}
+  console.log('torrents', data)
+  return {torrents: data?.torrents ?? [], isLoading, isError, error}
 }

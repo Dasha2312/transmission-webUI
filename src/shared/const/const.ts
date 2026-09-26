@@ -1,3 +1,5 @@
+import type { Torrent } from "../types/interface";
+
 export const enumConst = {
   BASE_URL: '/transmission/rpc'
 } as const
@@ -12,38 +14,41 @@ export const enumTorentStatus = {
   6: 'Torrent is seeding'
 } as const
 
-export const TorrentFields = [
+export const TorrentFields: (keyof Torrent)[] = [
   "id",
+  "added_date",
   "error",
   "name",
-  "errorString",
+  "file_count",
+  "error_string",
   "eta",
-  "isFinished",
-  "isStalled",
+  "is_finished",
+  "is_stalled",
+  "left_until_done",
+  "metadata_percent_complete",
   "labels",
-  "leftUntilDone",
-  "metadataPercentComplete",
   "peers",
-  "peersConnected",
-  "peersGettingFromUs",
-  "peersSendingToUs",
-  "percentDone",
-  "queuePosition",
-  "rateDownload",
-  "rateUpload",
-  "recheckProgress",
-  "seedRatioMode",
-  "seedRatioLimit",
-  "sizeWhenDone",
+  "peers_connected",
+  "peers_getting_from_us",
+  "peers_sending_to_us",
+  "percent_done",
+  "queue_position",
+  "rate_download",
+  "rate_upload",
+  "recheck_progress",
+  "seed_ratio_mode",
+  "seed_ratio_limit",
+  "size_when_done",
   "status",
+  "total_size",
   "trackers",
-  "downloadDir",
-  "uploadedEver",
-  "uploadRatio",
-  "totalSize",
-  "trackerStats",
-  "percentComplete",
-  "webseedsSendingToUs"
+  "download_dir",
+  "uploaded_ever",
+  "upload_ratio",
+  "total_size",
+  "tracker_stats",
+  "percent_complete",
+  "webseeds_sending_to_us"
 ]
 
 export type TorrentFieldsTypes = typeof TorrentFields[number];
