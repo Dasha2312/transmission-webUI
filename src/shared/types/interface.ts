@@ -1,3 +1,5 @@
+import type { SelectOption } from "../UI/Select/type/interface";
+
 export interface Torrent {
   added_date: string;
   download_dir: string,
@@ -73,9 +75,13 @@ export interface TrackerStat {
   tier: number
 }
 
+export interface SpeedOptions extends SelectOption<number>  {
+  enabled?: boolean;
+}
+
 export const ModalType = {
   ADD_TORRENT: "add-torrent",
   DELETE_TORRENT: "delete-torrent",
   DETAILS_TORRENT: 'details-torrent',
   SETTING: 'setting'
-} as const
+} as const;

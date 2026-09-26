@@ -9,8 +9,8 @@ function AddTorrentModal({onClose}: {onClose: () => void}) {
   const { data } = useSession();
   const {addTorrent, isPending, isError, error} = useTorrentAdd();
 
-  const dirFreeSpace =  data?.arguments['download-dir-free-space'];
-  const dirPathBase = data?.arguments['download-dir']
+  const dirFreeSpace =  data?.download_dir_free_space;
+  const dirPathBase = data?.download_dir
 
   const [paused, setPaused] = useState(true);
   const [dirPath, setDirPath] = useState(dirPathBase);
@@ -28,7 +28,7 @@ function AddTorrentModal({onClose}: {onClose: () => void}) {
     }
 
     addTorrent({
-      downloadDir: dirPath,
+      download_dir: dirPath,
       paused: paused,
       metainfo,
       filename

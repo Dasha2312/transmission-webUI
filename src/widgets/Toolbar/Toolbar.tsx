@@ -15,8 +15,6 @@ function Toolbar() {
   const {setType} = useModalState();
   const {activeTorrentItem, setActiveTorrentItem} = useActiveTorrent();
 
-  console.log('data', data)
-
   const downloadSpeed = data?.download_speed;
   const uploadSpeed = data?.upload_speed;
 

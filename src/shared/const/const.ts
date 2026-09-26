@@ -1,4 +1,4 @@
-import type { Torrent } from "../types/interface";
+import type { SpeedOptions, Torrent } from "../types/interface";
 
 export const enumConst = {
   BASE_URL: '/transmission/rpc'
@@ -52,3 +52,17 @@ export const TorrentFields: (keyof Torrent)[] = [
 ]
 
 export type TorrentFieldsTypes = typeof TorrentFields[number];
+
+export const SPEED_LIMIT_OPTIONS: SpeedOptions[] = [
+  { label: 'Unlimited', value: 0, enabled: false },
+  { label: '50 kB/s',   value: 50 },
+  { label: '100 kB/s',  value: 100 },
+  { label: '200 kB/s',  value: 200 },
+  { label: '500 kB/s',  value: 500 },
+  { label: '1 MB/s',    value: 1000 },
+  { label: '2 MB/s',    value: 2000 },
+  { label: '5 MB/s',    value: 5000 },
+  { label: '10 MB/s',   value: 10000 },
+  { label: '20 MB/s',   value: 20000 },
+  { label: '50 MB/s',   value: 50000 },
+] as const;

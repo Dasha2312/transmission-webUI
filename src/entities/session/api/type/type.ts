@@ -8,6 +8,7 @@ export interface SessionStatsDTO {
   upload_speed: number,
   download_dir: string;
   dht_enabled: string;
+  download_dir_free_space: number;
 }
 
 export interface SessionStatsInfo {
