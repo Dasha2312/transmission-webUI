@@ -9,6 +9,11 @@ export interface SessionStatsDTO {
   download_dir: string;
   dht_enabled: string;
   download_dir_free_space: number;
+  incomplete_dir_enabled: boolean;
+  download_queue_enabled: boolean;
+  download_queue_size: number;
+  rename_partial_files: boolean;
+  start_added_torrents: boolean;
 }
 
 export interface SessionStatsInfo {

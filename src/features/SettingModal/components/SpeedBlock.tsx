@@ -1,7 +1,7 @@
 import { SPEED_LIMIT_OPTIONS } from "@/shared/const/const";
 import Select from "@/shared/UI/Select/Select";
 
-function SpeedBlock() {
+function SpeedBlock({onClose}: {onClose: () => void}) {
   return (
     <>
       <div className="space-y-6 p-6">
@@ -30,6 +30,7 @@ function SpeedBlock() {
       <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200">
         <button
           className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          onClick={() => onClose()}
         >
           Cancel
         </button>

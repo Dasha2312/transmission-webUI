@@ -10,8 +10,6 @@ function useSessionStats() {
     staleTime: Infinity,
   })
 
-  console.log('asd', data)
-
   return {data, isLoading, isError, error}
 }
 

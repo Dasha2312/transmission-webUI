@@ -5,38 +5,37 @@ import Modal from "@/shared/UI/Modal/Modal";
 import { formatBytes } from "@/widgets/TorrentTable/helpers/helpers";
 import { useState } from "react";
 
-function AddTorrentModal({onClose}: {onClose: () => void}) {
+function AddTorrentModal({ onClose }: { onClose: () => void }) {
   const { data } = useSession();
-  const {addTorrent, isPending, isError, error} = useTorrentAdd();
+  const { addTorrent, isPending, isError, error } = useTorrentAdd();
 
-  const dirFreeSpace =  data?.download_dir_free_space;
-  const dirPathBase = data?.download_dir
+  const dirFreeSpace = data?.download_dir_free_space;
+  const dirPathBase = data?.download_dir;
 
   const [paused, setPaused] = useState(true);
   const [dirPath, setDirPath] = useState(dirPathBase);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [link, setLink] = useState('');
+  const [link, setLink] = useState("");
 
   async function handleAddTorrent() {
-    let metainfo: string | null = null
-    let filename: string | null = null
+    let metainfo: string | null = null;
+    let filename: string | null = null;
 
     if (selectedFile) {
-      metainfo = await fileToBase64(selectedFile)
+      metainfo = await fileToBase64(selectedFile);
     } else if (link) {
-      filename = link
+      filename = link;
     }
 
     addTorrent({
       download_dir: dirPath,
       paused: paused,
       metainfo,
-      filename
-    })
+      filename,
+    });
 
     onClose();
   }
-
 
   return (
     <Modal title="Add Torrent" isOpen={true} onClose={onClose}>
@@ -44,20 +43,42 @@ function AddTorrentModal({onClose}: {onClose: () => void}) {
         <div className="mb-4">
           <div className="text-[12px]">Please select torrent files to add:</div>
           <div>
-            <label htmlFor="file-input" className="sr-only cursor-pointer">Choose file</label>
-            <input type="file" name="file-input" id="file-input" accept=".torrent"  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer file:bg-gray-100 file:border-0 file:me-4 file:py-2 file:px-4 pr-3 file:text-gray-700 hover:file:bg-gray-200" 
-            onChange={(e) => setSelectedFile(e.target.files?.[0] ?? null)} />
+            <label htmlFor="file-input" className="sr-only cursor-pointer">
+              Choose file
+            </label>
+            <input
+              type="file"
+              name="file-input"
+              id="file-input"
+              accept=".torrent"
+              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer file:bg-gray-100 file:border-0 file:me-4 file:py-2 file:px-4 pr-3 file:text-gray-700 hover:file:bg-gray-200"
+              onChange={(e) => setSelectedFile(e.target.files?.[0] ?? null)}
+            />
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="url" className="block text-[12px]">Or enter a URL:</label>
-          <input type="url" name="url" className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg py-2 px-4"
-          value={link} 
-          onChange={(e) => setLink(e.target.value)} />
+          <label htmlFor="url" className="block text-[12px]">
+            Or enter a URL:
+          </label>
+          <input
+            type="url"
+            name="url"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg py-2 px-4"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+          />
         </div>
         <div className="mb-4">
-          <label htmlFor="folder-path" className="block text-[12px]">Destination folder: <strong>{formatBytes(dirFreeSpace)} Free</strong></label>
-          <input type="text" name="folder-path" value={dirPath} onChange={(e) => setDirPath(e.target.value)} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg py-2 px-4" />
+          <label htmlFor="folder-path" className="block text-[12px]">
+            Destination folder: <strong>{formatBytes(dirFreeSpace)} Free</strong>
+          </label>
+          <input
+            type="text"
+            name="folder-path"
+            value={dirPath}
+            onChange={(e) => setDirPath(e.target.value)}
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg py-2 px-4"
+          />
         </div>
 
         <div className="mb-4">
@@ -70,8 +91,19 @@ function AddTorrentModal({onClose}: {onClose: () => void}) {
             />
             <span className="w-5 h-5 border border-slate-300 rounded peer-checked:border-blue-600 flex items-center justify-center">
               {paused && (
-                <svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="m10.092.952-.005-.006-.006-.005A.45.45 0 0 0 9.43.939L4.162 6.23 1.585 3.636a.45.45 0 0 0-.652 0 .47.47 0 0 0 0 .657l.002.002L3.58 6.958a.8.8 0 0 0 .567.242.78.78 0 0 0 .567-.242l5.333-5.356a.474.474 0 0 0 .044-.65Zm-5.86 5.349V6.3Z" fill="#2563EB" stroke="#2563EB" strokeWidth=".4"/>
+                <svg
+                  width="11"
+                  height="8"
+                  viewBox="0 0 11 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m10.092.952-.005-.006-.006-.005A.45.45 0 0 0 9.43.939L4.162 6.23 1.585 3.636a.45.45 0 0 0-.652 0 .47.47 0 0 0 0 .657l.002.002L3.58 6.958a.8.8 0 0 0 .567.242.78.78 0 0 0 .567-.242l5.333-5.356a.474.474 0 0 0 .044-.65Zm-5.86 5.349V6.3Z"
+                    fill="#2563EB"
+                    stroke="#2563EB"
+                    strokeWidth=".4"
+                  />
                 </svg>
               )}
             </span>

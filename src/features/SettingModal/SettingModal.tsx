@@ -31,7 +31,7 @@ function SettingModal({onClose}: {onClose: () => void}) {
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          {ActiveComponent && <ActiveComponent />}
+          {ActiveComponent && <ActiveComponent onClose={onClose} />}
         </div>
       </div>
 
